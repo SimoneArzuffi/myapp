@@ -1,12 +1,32 @@
+package it.itispaleocapa.arzuffis.myapp;
+
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GenerationType;
 
 
-public interface PublisherRepository extends JpaRepository<Publisher, Long> {
 
-    @Query(value = ""+
-        " SELECT b.*, p.NAME" +
-        " FROM BOOK b INNER JOIN PUBLISHER p ON b.PUBLISHER = p.ID" +
-        " WHERE p.NAME ILIKE %:name%" +
-        "", nativeQuery = true)
-    List<Book> findByPublisher(@Param("name") String name);
-} // Add closing curly brace here
+@Entity
+public class Publisher {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    //getter
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String toString() {
+        return "Publisher: " + this.name;
+    }
+}
